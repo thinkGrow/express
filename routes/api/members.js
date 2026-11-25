@@ -1,24 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const members = require('../../Members');
+const { getMembers, getMember, createMember } = require('../../controllers/membersController');
 
-
-
-// get all members
-router.get('/', (req, res) => res.json(members));
-
-// get single member
-router.get('/:id', (req, res) => {
-
-    const found = members.some(member => member.id === parseInt(req.params.id));
-
-    if(found){
-        res.json(members.filter(member => member.id === parseInt(req.params.id)));
-    }
-    else{
-        res.status(400).json({msg : `Member ID : ${req.params.id} not found`});
-    }
-    
-});
+router.get('/', getMembers);
+router.get('/:id', getMember);
+router.post('/', createMember);
 
 module.exports = router;
